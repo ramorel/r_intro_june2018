@@ -7,7 +7,6 @@ params:
   notes: no
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -25,9 +24,13 @@ head(gapminder)
 
 ## `gapminder` dataset
 
-- The dataset has 142 countries 5 continents represented over 12 years
-
+- The dataset has data on 142 countries on 5 continents for five-year intervals between 1952 and 2007
 - What if we want to know the mean life expectancy by country? Or by year?
+- One approach:
+`mean(gapminder$lifeExp[gapminder$country == "Afganistan"])`
+`mean(gapminder$lifeExp[gapminder$country == "Albania"])`
+...
+- Or we could do save ourselves a lot of typing and time
 
 - Loops!
 
@@ -43,7 +46,7 @@ head(gapminder)
 
 ## The anatomy of a `for` loop
 
-- `for` loops repeat a function for all values in a vector vector -- _don't cut and paste!_
+- `for` loops repeat a function for all values in a vector  -- _don't cut and paste!_
 - The basic form is: `for (i in vector) { function(i) }`
   - `i` is the iterator variable (could be any letter!)
   - The loop repeats for each value in the vector, which replaces `i` for each interation
@@ -63,6 +66,7 @@ for (i in conts) {
 
 What are the country names in `gapminder`?
 
+## Country names in `gapminder`
 ```{r loop exercise}
 # create a vector of values that you want to repeat the function for
 country <- unique(gapminder$country)
@@ -73,17 +77,22 @@ for (i in country[1:10]) {
 }
 ```
 
-## What is the average life expectancy by year?
+## Let's try something a bit more substantive
 
-Let's try something a bit more substantive.
+- Has life expectancy increased over time?
+- Find the mean life expectancy by year
+
 ```{r mean by year}
 years <- unique(gapminder$year)
 
 for (i in years) {
-  print(paste(i, ":", 
-               mean(gapminder$lifeExp[gapminder$year == i], na.rm = T)))
+  print(paste0(i, ": ", 
+               mean(gapminder$lifeExp[gapminder$year == i], 
+                    na.rm = T)))
 }
 ```
+
+## Mean life expectancy by continent
 
 - Try the same, this time for continents!
   - Which continent has the highest mean life expectancy?
@@ -93,16 +102,125 @@ for (i in years) {
 conts <- unique(gapminder$continent)
 
 for (i in conts) {
-  print(paste(i, ":",
-              mean(gapminder$lifeExp[gapminder$continent == i], na.rm = T)))
+  print(paste0(i, ": ",
+              mean(gapminder$lifeExp[gapminder$continent == i], 
+                   na.rm = T)))
+}
+```
+
+## double up!
+
+- It is possible to make nested `for` loops by defining different iterators
+- What is the mean life expectancy for each continent for each year?
+
+## the nested `for` loop 
+
+```{r nested for loop}
+for (i in conts) {
+  print(paste0("Continent: ", i))
+  for (j in years) {
+    print(paste0(j, ": ",
+                 mean(gapminder$lifeExp[gapminder$continent == i & 
+                                          gapminder$year == j], na.rm = T)
+                 )
+          )
+  }
+}
+```
+
+## nested `for` loop exercise!
+
+- Has the gap in life expectancy between countries on different continents narrowed over time?
+
+## nested `for` loop exercise!
+
+- What is the standard deviation (`sd`) for GDP for each continent for each year?
+
+## nested `for` loop exercise!
+
+```{r nested `for` loop exercise!}
+for (i in conts) {
+  print(paste0("Continent: ", i))
+  for (j in years) {
+    print(paste0(j, ": ",
+                 sd(gapminder$gdpPercap[gapminder$continent == i & 
+                                          gapminder$year == j], na.rm = T)
+                 )
+          )
+  }
 }
 ```
 
 
+# the `while` loop
 
-# Loops and Conditionals
+- The `for` loop repeats a function for all values in vector
+- But what if we want to repeat a function until a condition is no longer met?
+  - Say hi to the `while` loop!
+  - For example, what is the standard deviation of life expectancy for years before 1987?
 
-Two tools for manipulating data are conditional statements and loops.  Conditional if/then/else statements let us take different actions based on the value of variables.
+## `while` loop syntax
+
+- Similar syntax to the `for` loop -> `while (condition) { function }`
+- Often, you define an interator that you will increase for each loop
+
+```{r while loop}
+i <-  1952 # define the interator
+
+while (i < 1987) {
+  print(paste0(i, ": ", 
+               sd(gapminder$lifeExp[gapminder$year == i])
+               )
+        )
+  i <- i + 5 # increase the iterator by the interval between years
+}
+```
+
+## try a `while` loop
+
+- What is the standard deviation for life expectancy for each year between 1987 and 2002 (inclusive)?
+
+## results
+
+```{r while loop exercise}
+i <-  1987 # define the interator
+
+while (i <= 2002) {
+  print(paste0(i, ": ", 
+               sd(gapminder$lifeExp[gapminder$year == i])
+               )
+        )
+  i <- i + 5 # increase the iterator by the interval between years
+}
+```
+
+## the infinite loop - a `while` loop cautionary tale
+
+- Beware! A `while` loop will continually run if the logical condition is never met!
+- Give it a try: run the previous `while` loop _without increasing the iterator_
+
+```{r the infinite loop, eval = F}
+i <-  1987 # define the interator
+
+while (i <= 2002) {
+  print(paste0(i, ": ", 
+               sd(gapminder$lifeExp[gapminder$year == i])
+               )
+        )
+  
+  # oops! forgot to increase i by 5! ESC! ESC! ESC!
+}
+```
+
+
+########## OLD SLIDES
+
+# Conditionals
+
+- if/else
+  - Executes a function when a condition is met
+- while
+  - Executes a function until a condition is met
 
 ## If/then/else
 

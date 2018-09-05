@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Richard Paquin Morel" />
-  <meta name="dcterms.date" content="2018-08-27" />
+  <meta name="dcterms.date" content="2018-09-05" />
   <title>Intro to R: Loops, Conditionals, Functions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1835,7 +1835,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section>
     <h1 class="title">Intro to R: Loops, Conditionals, Functions</h1>
     <h2 class="author">Richard Paquin Morel</h2>
-    <h3 class="date">2018-08-27</h3>
+    <h3 class="date">2018-09-05</h3>
 </section>
 
 <section id="remember-our-data-from-yesterday" class="slide level2">
@@ -1945,48 +1945,279 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">conts &lt;-<span class="st"> </span><span class="kw">unique</span>(gapminder<span class="op">$</span>continent)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> conts) {</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="kw">print</span>(<span class="kw">paste</span>(i, <span class="st">&quot;:&quot;</span>,</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="kw">print</span>(<span class="kw">paste0</span>(i, <span class="st">&quot;: &quot;</span>,</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">              <span class="kw">mean</span>(gapminder<span class="op">$</span>lifeExp[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> </span>i], <span class="dt">na.rm =</span> T)))</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">}</a></code></pre></div>
-<pre><code>## [1] &quot;Asia : 60.0649032323232&quot;
-## [1] &quot;Europe : 71.9036861111111&quot;
-## [1] &quot;Africa : 48.8653301282051&quot;
-## [1] &quot;Americas : 64.6587366666667&quot;
-## [1] &quot;Oceania : 74.3262083333333&quot;</code></pre>
+<pre><code>## [1] &quot;Asia: 60.0649032323232&quot;
+## [1] &quot;Europe: 71.9036861111111&quot;
+## [1] &quot;Africa: 48.8653301282051&quot;
+## [1] &quot;Americas: 64.6587366666667&quot;
+## [1] &quot;Oceania: 74.3262083333333&quot;</code></pre>
+</section><section id="double-up" class="slide level2">
+<h2>double up!</h2>
+<ul>
+<li>It is possible to make nested <code>for</code> loops by defining different iterators</li>
+<li>What is the mean life expectancy for each continent for each year?</li>
+</ul>
+</section><section id="the-nested-for-loop" class="slide level2">
+<h2>the nested <code>for</code> loop</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> conts) {</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;Continent: &quot;</span>, i))</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="cf">for</span> (j <span class="cf">in</span> years) {</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste0</span>(j, <span class="st">&quot;: &quot;</span>,</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">                 <span class="kw">mean</span>(gapminder<span class="op">$</span>lifeExp[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> </span>i <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">                                          </span>gapminder<span class="op">$</span>year <span class="op">==</span><span class="st"> </span>j], <span class="dt">na.rm =</span> T)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">                 )</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">          )</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">}</a></code></pre></div>
+<pre><code>## [1] &quot;Continent: Asia&quot;
+## [1] &quot;1952: 46.3143939393939&quot;
+## [1] &quot;1957: 49.3185442424242&quot;
+## [1] &quot;1962: 51.563223030303&quot;
+## [1] &quot;1967: 54.66364&quot;
+## [1] &quot;1972: 57.3192690909091&quot;
+## [1] &quot;1977: 59.6105563636364&quot;
+## [1] &quot;1982: 62.6179393939394&quot;
+## [1] &quot;1987: 64.8511818181818&quot;
+## [1] &quot;1992: 66.5372121212121&quot;
+## [1] &quot;1997: 68.0205151515152&quot;
+## [1] &quot;2002: 69.2338787878788&quot;
+## [1] &quot;2007: 70.7284848484849&quot;
+## [1] &quot;Continent: Europe&quot;
+## [1] &quot;1952: 64.4085&quot;
+## [1] &quot;1957: 66.7030666666667&quot;
+## [1] &quot;1962: 68.5392333333333&quot;
+## [1] &quot;1967: 69.7376&quot;
+## [1] &quot;1972: 70.7750333333333&quot;
+## [1] &quot;1977: 71.9377666666667&quot;
+## [1] &quot;1982: 72.8064&quot;
+## [1] &quot;1987: 73.6421666666667&quot;
+## [1] &quot;1992: 74.4401&quot;
+## [1] &quot;1997: 75.5051666666667&quot;
+## [1] &quot;2002: 76.7006&quot;
+## [1] &quot;2007: 77.6486&quot;
+## [1] &quot;Continent: Africa&quot;
+## [1] &quot;1952: 39.1355&quot;
+## [1] &quot;1957: 41.2663461538462&quot;
+## [1] &quot;1962: 43.3194423076923&quot;
+## [1] &quot;1967: 45.3345384615385&quot;
+## [1] &quot;1972: 47.4509423076923&quot;
+## [1] &quot;1977: 49.5804230769231&quot;
+## [1] &quot;1982: 51.5928653846154&quot;
+## [1] &quot;1987: 53.3447884615385&quot;
+## [1] &quot;1992: 53.6295769230769&quot;
+## [1] &quot;1997: 53.5982692307692&quot;
+## [1] &quot;2002: 53.3252307692308&quot;
+## [1] &quot;2007: 54.8060384615385&quot;
+## [1] &quot;Continent: Americas&quot;
+## [1] &quot;1952: 53.27984&quot;
+## [1] &quot;1957: 55.96028&quot;
+## [1] &quot;1962: 58.39876&quot;
+## [1] &quot;1967: 60.41092&quot;
+## [1] &quot;1972: 62.39492&quot;
+## [1] &quot;1977: 64.39156&quot;
+## [1] &quot;1982: 66.22884&quot;
+## [1] &quot;1987: 68.09072&quot;
+## [1] &quot;1992: 69.56836&quot;
+## [1] &quot;1997: 71.15048&quot;
+## [1] &quot;2002: 72.42204&quot;
+## [1] &quot;2007: 73.60812&quot;
+## [1] &quot;Continent: Oceania&quot;
+## [1] &quot;1952: 69.255&quot;
+## [1] &quot;1957: 70.295&quot;
+## [1] &quot;1962: 71.085&quot;
+## [1] &quot;1967: 71.31&quot;
+## [1] &quot;1972: 71.91&quot;
+## [1] &quot;1977: 72.855&quot;
+## [1] &quot;1982: 74.29&quot;
+## [1] &quot;1987: 75.32&quot;
+## [1] &quot;1992: 76.945&quot;
+## [1] &quot;1997: 78.19&quot;
+## [1] &quot;2002: 79.74&quot;
+## [1] &quot;2007: 80.7195&quot;</code></pre>
+</section><section id="nested-for-loop-exercise" class="slide level2">
+<h2>nested <code>for</code> loop exercise!</h2>
+<ul>
+<li>Has the gap in life expectancy between countries on different continents narrowed over time?</li>
+</ul>
+</section><section id="nested-for-loop-exercise-1" class="slide level2">
+<h2>nested <code>for</code> loop exercise!</h2>
+<ul>
+<li>What is the standard deviation (<code>sd</code>) for GDP for each continent for each year?</li>
+</ul>
+</section><section id="nested-for-loop-exercise-2" class="slide level2">
+<h2>nested <code>for</code> loop exercise!</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> conts) {</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;Continent: &quot;</span>, i))</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="cf">for</span> (j <span class="cf">in</span> years) {</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste0</span>(j, <span class="st">&quot;: &quot;</span>,</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">                 <span class="kw">sd</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> </span>i <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">                                          </span>gapminder<span class="op">$</span>year <span class="op">==</span><span class="st"> </span>j], <span class="dt">na.rm =</span> T)</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">                 )</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">          )</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">}</a></code></pre></div>
+<pre><code>## [1] &quot;Continent: Asia&quot;
+## [1] &quot;1952: 18634.8908654504&quot;
+## [1] &quot;1957: 19506.5159589661&quot;
+## [1] &quot;1962: 16415.857196395&quot;
+## [1] &quot;1967: 14062.591362492&quot;
+## [1] &quot;1972: 19087.5029184416&quot;
+## [1] &quot;1977: 11815.777923037&quot;
+## [1] &quot;1982: 8701.17649917184&quot;
+## [1] &quot;1987: 8090.26276537004&quot;
+## [1] &quot;1992: 9727.43108799162&quot;
+## [1] &quot;1997: 11094.180481033&quot;
+## [1] &quot;2002: 11150.7192027005&quot;
+## [1] &quot;2007: 14154.9373428805&quot;
+## [1] &quot;Continent: Europe&quot;
+## [1] &quot;1952: 3114.06049265532&quot;
+## [1] &quot;1957: 3677.95014597648&quot;
+## [1] &quot;1962: 4199.19390641838&quot;
+## [1] &quot;1967: 4724.98388865093&quot;
+## [1] &quot;1972: 5509.69141095736&quot;
+## [1] &quot;1977: 5874.46489596902&quot;
+## [1] &quot;1982: 6453.23482661465&quot;
+## [1] &quot;1987: 7482.95796003972&quot;
+## [1] &quot;1992: 9109.80436105703&quot;
+## [1] &quot;1997: 10065.4577161932&quot;
+## [1] &quot;2002: 11197.3555167025&quot;
+## [1] &quot;2007: 11800.3398108881&quot;
+## [1] &quot;Continent: Africa&quot;
+## [1] &quot;1952: 982.952115538416&quot;
+## [1] &quot;1957: 1134.5089183774&quot;
+## [1] &quot;1962: 1461.83918875565&quot;
+## [1] &quot;1967: 2847.71760343509&quot;
+## [1] &quot;1972: 3286.8538840091&quot;
+## [1] &quot;1977: 4142.39870672529&quot;
+## [1] &quot;1982: 3242.6327527397&quot;
+## [1] &quot;1987: 2566.53194679582&quot;
+## [1] &quot;1992: 2644.07560232197&quot;
+## [1] &quot;1997: 2820.728117107&quot;
+## [1] &quot;2002: 2972.65130767007&quot;
+## [1] &quot;2007: 3618.16349144035&quot;
+## [1] &quot;Continent: Americas&quot;
+## [1] &quot;1952: 3001.72752163266&quot;
+## [1] &quot;1957: 3312.38108292101&quot;
+## [1] &quot;1962: 3421.74056877156&quot;
+## [1] &quot;1967: 4160.8855595904&quot;
+## [1] &quot;1972: 4754.40432881002&quot;
+## [1] &quot;1977: 5355.60251825134&quot;
+## [1] &quot;1982: 5530.49047115146&quot;
+## [1] &quot;1987: 6665.03950872974&quot;
+## [1] &quot;1992: 7047.08919137503&quot;
+## [1] &quot;1997: 7874.22514465829&quot;
+## [1] &quot;2002: 8895.81778533521&quot;
+## [1] &quot;2007: 9713.20930239591&quot;
+## [1] &quot;Continent: Oceania&quot;
+## [1] &quot;1952: 365.560077879958&quot;
+## [1] &quot;1957: 917.644805938885&quot;
+## [1] &quot;1962: 677.727300529976&quot;
+## [1] &quot;1967: 43.9860864405916&quot;
+## [1] &quot;1972: 525.091980276236&quot;
+## [1] &quot;1977: 1485.26351739643&quot;
+## [1] &quot;1982: 1304.32837661711&quot;
+## [1] &quot;1987: 2037.66801328395&quot;
+## [1] &quot;1992: 3578.97988300066&quot;
+## [1] &quot;1997: 4205.5337031416&quot;
+## [1] &quot;2002: 5301.85368001859&quot;
+## [1] &quot;2007: 6540.99110354847&quot;</code></pre>
 </section></section>
-<section><section id="loops-and-conditionals" class="title-slide slide level1"><h1>Loops and Conditionals</h1></section><section id="ifthenelse" class="slide level2">
+<section><section id="the-while-loop" class="title-slide slide level1"><h1>the <code>while</code> loop</h1></section><section id="while-loop-syntax" class="slide level2">
+<h2><code>while</code> loop syntax</h2>
+<ul>
+<li>Similar syntax to the <code>for</code> loop -&gt; <code>while (condition) { function }</code></li>
+<li>Often, you define an interator that you will increase for each loop</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">i &lt;-<span class="st">  </span><span class="dv">1952</span> <span class="co"># define the interator</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span><span class="dv">1987</span>) {</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">  <span class="kw">print</span>(<span class="kw">paste0</span>(i, <span class="st">&quot;: &quot;</span>, </a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">               <span class="kw">sd</span>(gapminder<span class="op">$</span>lifeExp[gapminder<span class="op">$</span>year <span class="op">==</span><span class="st"> </span>i])</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">               )</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">        )</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">  i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="co"># increase the iterator by the interval between years</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">}</a></code></pre></div>
+<pre><code>## [1] &quot;1952: 12.2259557776501&quot;
+## [1] &quot;1957: 12.2312861234041&quot;
+## [1] &quot;1962: 12.0972450062645&quot;
+## [1] &quot;1967: 11.7188577789887&quot;
+## [1] &quot;1972: 11.3819531380937&quot;
+## [1] &quot;1977: 11.2272293919197&quot;
+## [1] &quot;1982: 10.7706178327824&quot;</code></pre>
+</section><section id="try-a-while-loop" class="slide level2">
+<h2>try a <code>while</code> loop</h2>
+<ul>
+<li>What is the standard deviation for life expectancy for each year between 1987 and 2002 (inclusive)?</li>
+</ul>
+</section><section id="results" class="slide level2">
+<h2>results</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">i &lt;-<span class="st">  </span><span class="dv">1987</span> <span class="co"># define the interator</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="cf">while</span> (i <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2002</span>) {</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">  <span class="kw">print</span>(<span class="kw">paste0</span>(i, <span class="st">&quot;: &quot;</span>, </a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">               <span class="kw">sd</span>(gapminder<span class="op">$</span>lifeExp[gapminder<span class="op">$</span>year <span class="op">==</span><span class="st"> </span>i])</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">               )</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">        )</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">  i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="co"># increase the iterator by the interval between years</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">}</a></code></pre></div>
+<pre><code>## [1] &quot;1987: 10.5562851721688&quot;
+## [1] &quot;1992: 11.2273795265798&quot;
+## [1] &quot;1997: 11.5594390582383&quot;
+## [1] &quot;2002: 12.2798227122797&quot;</code></pre>
+</section><section id="the-infinite-loop---a-while-loop-cautionary-tale" class="slide level2">
+<h2>the infinite loop - a <code>while</code> loop cautionary tale</h2>
+<ul>
+<li>Beware! A <code>while</code> loop will continually run if the logical condition is never met!</li>
+<li>Give it a try: run the previous <code>while</code> loop <em>without increasing the iterator</em></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">i &lt;-<span class="st">  </span><span class="dv">1987</span> <span class="co"># define the interator</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="cf">while</span> (i <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2002</span>) {</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">  <span class="kw">print</span>(<span class="kw">paste0</span>(i, <span class="st">&quot;: &quot;</span>, </a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">               <span class="kw">sd</span>(gapminder<span class="op">$</span>lifeExp[gapminder<span class="op">$</span>year <span class="op">==</span><span class="st"> </span>i])</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">               )</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">        )</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">  </a>
+<a class="sourceLine" id="cb19-9" data-line-number="9">  <span class="co"># oops! forgot to increase i by 5! ESC! ESC! ESC!</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10">}</a></code></pre></div>
+<p id="old-slides">OLD SLIDES</p>
+</section></section>
+<section><section id="conditionals" class="title-slide slide level1"><h1>Conditionals</h1></section><section id="ifthenelse" class="slide level2">
 <h2>If/then/else</h2>
 <p>As an example, sample a random number from a Poisson distribution with a mean (lambda) of 8. Print a message if it’s greater than or equal to 10.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">1</span>, <span class="dt">lambda=</span><span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="cf">if</span> (x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">  <span class="kw">print</span>(<span class="st">&quot;x is greater than or equal to 10&quot;</span>)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">x</a></code></pre></div>
-<pre><code>## [1] 7</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">1</span>, <span class="dt">lambda=</span><span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="cf">if</span> (x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">  <span class="kw">print</span>(<span class="st">&quot;x is greater than or equal to 10&quot;</span>)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">}</a></code></pre></div>
+<pre><code>## [1] &quot;x is greater than or equal to 10&quot;</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">x</a></code></pre></div>
+<pre><code>## [1] 12</code></pre>
 <p>Some of you may have gotten different answers. Try executing the code again.</p>
 <p>We can avoid the randomness (useful in finding errors in our code and making the code reproducible) by setting the random seed. Let’s also add some else statements.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">1</span>, <span class="dt">lambda=</span><span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="cf">if</span> (x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">  <span class="kw">print</span>(<span class="st">&quot;x is greater than or equal to 10&quot;</span>)</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;x is greater than 5&quot;</span>)</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">  <span class="kw">print</span>(<span class="st">&quot;x is less than 5&quot;</span>)</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10">}</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">1</span>, <span class="dt">lambda=</span><span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="cf">if</span> (x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">  <span class="kw">print</span>(<span class="st">&quot;x is greater than or equal to 10&quot;</span>)</a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb24-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;x is greater than 5&quot;</span>)</a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb24-9" data-line-number="9">  <span class="kw">print</span>(<span class="st">&quot;x is less than 5&quot;</span>)</a>
+<a class="sourceLine" id="cb24-10" data-line-number="10">}</a></code></pre></div>
 <pre><code>## [1] &quot;x is greater than 5&quot;</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">x</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">x</a></code></pre></div>
 <pre><code>## [1] 8</code></pre>
 <p>Now everyone should get the same answer.</p>
 <p>One point with if…else that trips some people up is that the conditional test in <code>if()</code> is a single value – NOT a vector. The following gives a warning and unexpected output:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">y&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="cf">if</span> (y <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">  <span class="kw">print</span>(<span class="kw">paste</span>(y, <span class="st">&quot;is less than 5&quot;</span>))</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">  <span class="kw">print</span>(<span class="kw">paste</span>(y, <span class="st">&quot;is &gt;= 5&quot;</span>))</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">y&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="cf">if</span> (y <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">  <span class="kw">print</span>(<span class="kw">paste</span>(y, <span class="st">&quot;is less than 5&quot;</span>))</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">  <span class="kw">print</span>(<span class="kw">paste</span>(y, <span class="st">&quot;is &gt;= 5&quot;</span>))</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">}</a></code></pre></div>
 <pre><code>## Warning in if (y &lt; 5) {: the condition has length &gt; 1 and only the first
 ## element will be used</code></pre>
 <pre><code>##  [1] &quot;1 is less than 5&quot;  &quot;2 is less than 5&quot;  &quot;3 is less than 5&quot; 
@@ -1995,9 +2226,9 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## [10] &quot;10 is less than 5&quot;</code></pre>
 <p>The warning message “the condition has length &gt; 1 and only the first element will be used” comes from using y, which is a vector, in the if statement. <code>y &lt; 5</code> produces a vector of TRUE and FALSE values: TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE. The warning message is telling you that only the first value of that vector matters, which in this case is TRUE. Because it is TRUE, we’re in the first part of the if statement with <code>print(paste(y, &quot;is less than 5&quot;))</code>. The <code>paste</code> function concatenates two pieces of text. It allows vectors as input. So in this case, it takes the entire y vector (all of the values in it), and pastes each value with “is less than 5”, leading to the output you see above. To have the if statement evaluated for each value of the y vector, you’d need to put it inside a loop, which we’ll get to next.</p>
 <p>There is, however, a shorthand <code>ifelse</code> function that does work on vectors and is useful for recoding data.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">mydata&lt;-<span class="kw">data.frame</span>(<span class="dt">val=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">mydata<span class="op">$</span>category&lt;-<span class="kw">ifelse</span>(mydata<span class="op">$</span>val<span class="op">&lt;</span><span class="dv">4</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;not low&quot;</span>)</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">mydata</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">mydata&lt;-<span class="kw">data.frame</span>(<span class="dt">val=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">mydata<span class="op">$</span>category&lt;-<span class="kw">ifelse</span>(mydata<span class="op">$</span>val<span class="op">&lt;</span><span class="dv">4</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;not low&quot;</span>)</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">mydata</a></code></pre></div>
 <pre><code>##    val category
 ## 1    1      low
 ## 2    2      low
@@ -2011,9 +2242,9 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## 10  10  not low</code></pre>
 <p>This example created a new variable, but you can save the results back to the same variable if you’re trying to change values in the same object.</p>
 <p>We can nest the <code>ifelse</code> statements too</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">mydata<span class="op">$</span>category&lt;-<span class="kw">ifelse</span>(mydata<span class="op">$</span>val<span class="op">&lt;</span><span class="dv">4</span>, <span class="st">&quot;low&quot;</span>, </a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">                        <span class="kw">ifelse</span>(mydata<span class="op">$</span>val<span class="op">&lt;</span><span class="dv">8</span>, <span class="st">&quot;medium&quot;</span>, <span class="st">&quot;high&quot;</span>))</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">mydata</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">mydata<span class="op">$</span>category&lt;-<span class="kw">ifelse</span>(mydata<span class="op">$</span>val<span class="op">&lt;</span><span class="dv">4</span>, <span class="st">&quot;low&quot;</span>, </a>
+<a class="sourceLine" id="cb33-2" data-line-number="2">                        <span class="kw">ifelse</span>(mydata<span class="op">$</span>val<span class="op">&lt;</span><span class="dv">8</span>, <span class="st">&quot;medium&quot;</span>, <span class="st">&quot;high&quot;</span>))</a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">mydata</a></code></pre></div>
 <pre><code>##    val category
 ## 1    1      low
 ## 2    2      low
@@ -2026,7 +2257,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## 9    9     high
 ## 10  10     high</code></pre>
 <p>And, an example fixing the broken example above:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">ifelse</span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>, <span class="kw">paste</span>(y, <span class="st">&quot;is less than 5&quot;</span>), <span class="kw">paste</span>(y, <span class="st">&quot;is &gt;= 5&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">ifelse</span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>, <span class="kw">paste</span>(y, <span class="st">&quot;is less than 5&quot;</span>), <span class="kw">paste</span>(y, <span class="st">&quot;is &gt;= 5&quot;</span>))</a></code></pre></div>
 <pre><code>##  [1] &quot;1 is less than 5&quot; &quot;2 is less than 5&quot; &quot;3 is less than 5&quot;
 ##  [4] &quot;4 is less than 5&quot; &quot;5 is &gt;= 5&quot;        &quot;6 is &gt;= 5&quot;       
 ##  [7] &quot;7 is &gt;= 5&quot;        &quot;8 is &gt;= 5&quot;        &quot;9 is &gt;= 5&quot;       
@@ -2034,9 +2265,9 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section><section id="loops" class="slide level2">
 <h2>Loops</h2>
 <p>We can also repeat the same thing multiple times for different values:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>){</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">  <span class="kw">print</span>(i)</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>){</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">  <span class="kw">print</span>(i)</a>
+<a class="sourceLine" id="cb37-3" data-line-number="3">}</a></code></pre></div>
 <pre><code>## [1] 1
 ## [1] 2
 ## [1] 3
@@ -2047,9 +2278,9 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## [1] 8
 ## [1] 9
 ## [1] 10</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">11</span>)) {</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">  <span class="kw">cat</span>(i,<span class="st">&quot;is prime!</span><span class="ch">\n</span><span class="st">&quot;</span>) </a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">11</span>)) {</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">  <span class="kw">cat</span>(i,<span class="st">&quot;is prime!</span><span class="ch">\n</span><span class="st">&quot;</span>) </a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">}</a></code></pre></div>
 <pre><code>## 2 is prime!
 ## 3 is prime!
 ## 5 is prime!
@@ -2057,11 +2288,11 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## 11 is prime!</code></pre>
 <p><code>cat</code> is like <code>print(paste())</code> but it doesn’t automatically print a new line.</p>
 <p>We can nest for loops:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">  <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>)){</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3">    <span class="kw">print</span>(<span class="kw">paste</span>(i,j))</a>
-<a class="sourceLine" id="cb30-4" data-line-number="4">  }</a>
-<a class="sourceLine" id="cb30-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>)){</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">    <span class="kw">print</span>(<span class="kw">paste</span>(i,j))</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4">  }</a>
+<a class="sourceLine" id="cb41-5" data-line-number="5">}</a></code></pre></div>
 <pre><code>## [1] &quot;1 a&quot;
 ## [1] &quot;1 b&quot;
 ## [1] &quot;1 c&quot;
@@ -2088,36 +2319,36 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## [1] &quot;5 d&quot;
 ## [1] &quot;5 e&quot;</code></pre>
 <p>Rather than printing the results, we could write the loop output to a new object.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">output_vector &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</a>
-<a class="sourceLine" id="cb32-3" data-line-number="3">  <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>)){</a>
-<a class="sourceLine" id="cb32-4" data-line-number="4">    temp_output &lt;-<span class="st"> </span><span class="kw">paste</span>(i, j)</a>
-<a class="sourceLine" id="cb32-5" data-line-number="5">    output_vector &lt;-<span class="st"> </span><span class="kw">c</span>(output_vector, temp_output) <span class="co"># existing values plus the new one</span></a>
-<a class="sourceLine" id="cb32-6" data-line-number="6">  }</a>
-<a class="sourceLine" id="cb32-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb32-8" data-line-number="8">output_vector</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">output_vector &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">  <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>)){</a>
+<a class="sourceLine" id="cb43-4" data-line-number="4">    temp_output &lt;-<span class="st"> </span><span class="kw">paste</span>(i, j)</a>
+<a class="sourceLine" id="cb43-5" data-line-number="5">    output_vector &lt;-<span class="st"> </span><span class="kw">c</span>(output_vector, temp_output) <span class="co"># existing values plus the new one</span></a>
+<a class="sourceLine" id="cb43-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb43-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb43-8" data-line-number="8">output_vector</a></code></pre></div>
 <pre><code>##  [1] &quot;1 a&quot; &quot;1 b&quot; &quot;1 c&quot; &quot;1 d&quot; &quot;1 e&quot; &quot;2 a&quot; &quot;2 b&quot; &quot;2 c&quot; &quot;2 d&quot; &quot;2 e&quot; &quot;3 a&quot;
 ## [12] &quot;3 b&quot; &quot;3 c&quot; &quot;3 d&quot; &quot;3 e&quot; &quot;4 a&quot; &quot;4 b&quot; &quot;4 c&quot; &quot;4 d&quot; &quot;4 e&quot; &quot;5 a&quot; &quot;5 b&quot;
 ## [23] &quot;5 c&quot; &quot;5 d&quot; &quot;5 e&quot;</code></pre>
 <p>There are also <code>while</code> loops</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">z &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="cf">while</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>){</a>
-<a class="sourceLine" id="cb34-3" data-line-number="3">  z &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb34-4" data-line-number="4">  <span class="kw">print</span>(z)</a>
-<a class="sourceLine" id="cb34-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">z &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="cf">while</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>){</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3">  z &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4">  <span class="kw">print</span>(z)</a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">}</a></code></pre></div>
 <pre><code>## [1] 0.3067685
 ## [1] 0.4269077
 ## [1] 0.6931021
 ## [1] 0.08513597</code></pre>
 <p>And let’s fix the example that gave us warnings above in the if…else section:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">y&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="cf">for</span> (val <span class="cf">in</span> y) {</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3">  <span class="cf">if</span> (val <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
-<a class="sourceLine" id="cb36-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste</span>(val, <span class="st">&quot;is less than 5&quot;</span>))</a>
-<a class="sourceLine" id="cb36-5" data-line-number="5">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb36-6" data-line-number="6">    <span class="kw">print</span>(<span class="kw">paste</span>(val, <span class="st">&quot;is &gt;= 5&quot;</span>))</a>
-<a class="sourceLine" id="cb36-7" data-line-number="7">  }</a>
-<a class="sourceLine" id="cb36-8" data-line-number="8">}</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">y&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="cf">for</span> (val <span class="cf">in</span> y) {</a>
+<a class="sourceLine" id="cb47-3" data-line-number="3">  <span class="cf">if</span> (val <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb47-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste</span>(val, <span class="st">&quot;is less than 5&quot;</span>))</a>
+<a class="sourceLine" id="cb47-5" data-line-number="5">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb47-6" data-line-number="6">    <span class="kw">print</span>(<span class="kw">paste</span>(val, <span class="st">&quot;is &gt;= 5&quot;</span>))</a>
+<a class="sourceLine" id="cb47-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb47-8" data-line-number="8">}</a></code></pre></div>
 <pre><code>## [1] &quot;1 is less than 5&quot;
 ## [1] &quot;2 is less than 5&quot;
 ## [1] &quot;3 is less than 5&quot;
@@ -2129,14 +2360,14 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ## [1] &quot;9 is &gt;= 5&quot;
 ## [1] &quot;10 is &gt;= 5&quot;</code></pre>
 <p>Or, what if we wanted the iteration number and the values in a vector?</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">y&lt;-<span class="kw">seq</span>(<span class="dv">3</span>,<span class="dv">6</span>,.<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(y)) {</a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">  <span class="cf">if</span> (y[i] <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
-<a class="sourceLine" id="cb38-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Iteration&quot;</span>,i,<span class="st">&quot;:&quot;</span>, y[i], <span class="st">&quot;is less than 5&quot;</span>))</a>
-<a class="sourceLine" id="cb38-5" data-line-number="5">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb38-6" data-line-number="6">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Iteration&quot;</span>,i,<span class="st">&quot;:&quot;</span>, y[i], <span class="st">&quot;is &gt;= 5&quot;</span>))</a>
-<a class="sourceLine" id="cb38-7" data-line-number="7">  }</a>
-<a class="sourceLine" id="cb38-8" data-line-number="8">}</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">y&lt;-<span class="kw">seq</span>(<span class="dv">3</span>,<span class="dv">6</span>,.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(y)) {</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="cf">if</span> (y[i] <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Iteration&quot;</span>,i,<span class="st">&quot;:&quot;</span>, y[i], <span class="st">&quot;is less than 5&quot;</span>))</a>
+<a class="sourceLine" id="cb49-5" data-line-number="5">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb49-6" data-line-number="6">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Iteration&quot;</span>,i,<span class="st">&quot;:&quot;</span>, y[i], <span class="st">&quot;is &gt;= 5&quot;</span>))</a>
+<a class="sourceLine" id="cb49-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb49-8" data-line-number="8">}</a></code></pre></div>
 <pre><code>## [1] &quot;Iteration 1 : 3 is less than 5&quot;
 ## [1] &quot;Iteration 2 : 3.3 is less than 5&quot;
 ## [1] &quot;Iteration 3 : 3.6 is less than 5&quot;
