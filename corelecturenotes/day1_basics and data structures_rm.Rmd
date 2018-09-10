@@ -1,6 +1,6 @@
 ---
 title: "Intro to R: Day 1"
-author: "Kumar Ramanathan"
+author: "Kumar Ramanathan (based on materials by Christina Maimone)"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -22,9 +22,26 @@ notes<-params$notes
 
 # Getting acquainted with R
 
-## Why R? - NEED TO COMPLETE
+## Why R?
 
-## RStudio and RStudio Server - NEED TO COMPLETE
+R is a free software environment for statistical computing and graphics. It is supported by the R Foundation for Statistical Computing and was initially developed in the late 1990s. As a full programming language, it is more flexible and capacious than alternatives for statistical computing such as Stata. Since it is designed for data analysis, it is particularly well suited to the needs of data scientists compared to most other programming languages. Since it is open source, it is a customizable and extensible tool, for which thousands of useful and tailored packages have been written by users worldwide. Finally, it is widely used and a large community has grown around R, meaning that help is always around the corner.
+
+For more information, see the [R project website](https://www.r-project.org/). You can get a taste for the R community at [R-bloggers](https://www.r-bloggers.com/), the [RStudio community forum](https://community.rstudio.com/), [R-Ladies](https://rladies.org/), and [Stack Overflow](https://stackoverflow.com/questions/tagged/r).
+
+Here are a few things to remember about R:
+- "R" refers to both the language and the environment (application).
+- R runs in memory, objects are loaded in memory.
+- It's expected that you'll install and use additional packages
+- Packages are open source and user contributed, so use established packages or evaluate quality.
+- There are multiple ways to do most things. Some ways are better than others, but sometimes it is a question of style and preference.
+- You can, and often will, have more than one dataset open in R at the same time.
+
+
+## RStudio and RStudio Server
+
+RStudio is a software program that makes working in R easier, developed and maintained by a company with the same name. It provides an integrated development environment, or IDE, for R. RStudio helps you organize your workflow and keep track of your work. The top-left pane is where you open, work on, and save script files. The bottom-left pane includes the console, which is where your code actually "runs" -- you can run code here directly, or from a script file. The right-hand side panes include tools for manging your environment, workspace, and packages; for plotting and graphics; for accessing help files; and more.
+
+At MSiA, you have access to RStudio Server, which allows you to access RStudio through a web browser and do computation on a server rather than your personal computer. 
 
 ## Installing and loading packages
 
@@ -150,7 +167,6 @@ Variable names can contain letters, numbers, underscores and periods. They canno
 - underscores_between_words
 - camelCaseToSeparateWords
 
-
 ```{r}
 x <- 4
 x
@@ -160,9 +176,7 @@ x + y
 myVariable <- x <- 3 + 4 + 7
 ```
 
-```{asis, echo=notes}
-_When you create a variable, it shows up in the environment window._
-```
+Note that when you create a variable in RStudio, it shows up in the environment tab in the top-right pane.
 
 ## Data Types
 
