@@ -24,7 +24,7 @@ head(gapminder)
 
 ## `gapminder` dataset
 
-- The dataset has data on 142 countries on 5 continents for five-year intervals between 1952 and 2007
+- The dataset has data on 142 countries on 5 continents for five year intervals between 1952 and 2007
 - What if we want to know the mean life expectancy by country? Or by year?
 - One approach:
 `mean(gapminder$lifeExp[gapminder$country == "Afganistan"])`
@@ -88,7 +88,8 @@ years <- unique(gapminder$year)
 for (i in years) {
   print(paste0(i, ": ", 
                mean(gapminder$lifeExp[gapminder$year == i], 
-                    na.rm = T)))
+                    na.rm = T))
+        )
 }
 ```
 
@@ -134,23 +135,83 @@ for (i in conts) {
 
 ## nested `for` loop exercise!
 
-- What is the standard deviation (`sd`) for GDP for each continent for each year?
+- What is the standard deviation (`sd`) for life expectancy for each continent for each year?
 
 ## nested `for` loop exercise!
 
-```{r nested `for` loop exercise!}
+```{r nested for loop exercise!}
 for (i in conts) {
   print(paste0("Continent: ", i))
   for (j in years) {
     print(paste0(j, ": ",
-                 sd(gapminder$gdpPercap[gapminder$continent == i & 
-                                          gapminder$year == j], na.rm = T)
+                 sd(gapminder$lifeExp[gapminder$continent == i & 
+                                          gapminder$year == j], 
+                    na.rm = T)
                  )
           )
   }
 }
 ```
 
+# `for` loops can be slow...very slow
+
+## `for` loops can be slow...very slow
+
+- Sometimes, people recommend using the `apply` family of functions as a faster alternative
+  - There are _some_ efficiency gains with smaller datasets
+  - But, as Patrick Burns, the author of "R Inferno", states, the `apply` family is "loop-hiding"
+- `apply` and its relatives help you write cleaner code, but do not expect much of a speed boost
+  - do a search for "for loops versus apply in r" and get a taste for the debate
+
+## Three flavors: `apply`, `lapply`, `sapply`
+
+- Let's look at these three (there are more!): `apply`, `lapply`, `sapply`
+
+## `apply`
+
+`apply(matrix, 1 = row or 2 = column, function)`
+- Let's say we want to find the mean for each stat in `gapminder`
+
+```{r apply}
+vars <- gapminder[, c("lifeExp", "pop", "gdpPercap")]
+apply(vars, 2, mean)
+```
+
+## `apply` versus `for`
+
+```{r apply vs for}
+apply(vars, 2, mean)
+
+for (i in vars) {
+  print(mean(i))
+}
+```
+
+## `lapply` and `sapply`
+
+- Both `lapply` and `sapply` iterate over a values in a vector or list, rather than rows or columns
+  - Generally, much more common to use in data analysis
+- `lapply` returns a list
+- `sapply` returns a simplified list (i.e., a vector)
+  - Word of caution -- there is some inconsistency in how `sapply` returns results, so always check
+
+## `lapply` and `sapply`
+
+- `lapply(vector, function)`
+
+```{r lapply warning = F, message = F}
+lapply(gapminder, mean)
+sapply(gapminder, mean)
+```
+
+## Anonymous functions in `apply`
+
+- You can do more complex functions within an `apply` call
+- Add `function(x) [function]` to the call--`x` becomes the iterator
+
+```{r anonymous function}
+sapply(years, function(x) mean(gapminder$lifeExp[gapminder$year == x]))
+```
 
 # the `while` loop
 
@@ -196,7 +257,7 @@ while (i <= 2002) {
 
 ## the infinite loop - a `while` loop cautionary tale
 
-- Beware! A `while` loop will continually run if the logical condition is never met!
+- Beware! A `while` loop will continually run if the logical condition is always satisfied!
 - Give it a try: run the previous `while` loop _without increasing the iterator_
 
 ```{r the infinite loop, eval = F}
@@ -210,6 +271,143 @@ while (i <= 2002) {
   
   # oops! forgot to increase i by 5! ESC! ESC! ESC!
 }
+```
+
+# The `if/else` conditional!
+
+- `if/else` - executes a function when a condition is met
+
+## Start with `if`
+
+- Similar to `for` and `while`, initialize with `if` and then detail condition in parentheses
+
+```{r if statement}
+random_year <- sample(years, 1)
+
+if (random_year > 1977) {
+  print(random_year)
+}
+```
+
+## `if` statements
+
+- We probably got different answers because of random sampling from `years`
+- We can fix that with `set.seed()`
+
+```{r if statement with set seed}
+set.seed(10)
+random_year <- sample(years, 1)
+
+if (random_year > 1977) {
+  print(random_year)
+}
+```
+
+## Adding an `else` clause
+
+- What happens if `random_year` <= 1977? NOTHING!
+- We can add an `else` statement, telling R what to do when the `if` condition isn't met
+
+```{r adding the else statement}
+set.seed(1)
+random_year <- sample(years, 1)
+
+if (random_year > 1977) {
+  print(random_year)
+  } else {
+  print("sorry, random year is less than 1977")  
+  }
+```
+
+## putting `if` and `else` together
+
+```{r if else statement}
+random_year <- sample(years, 1)
+
+if (random_year > 1977) {
+  print(paste0(random_year, ": ", 
+               mean(gapminder$lifeExp[gapminder$year == random_year]))
+        )
+  } else { 
+    print("sorry, random year is less than 1977")
+    }
+```
+
+## Putting it `for` and `if/else` together
+
+- We can add an `if`...`else` clause to a `for` loop
+- What is the mean GDP per capita for years <= 1977? What is the mean life expectancy for years > 1977?
+
+```{r, eval = F}
+# initialize the `for` loop
+for () {
+  if () { #initialize if statement
+    # function if condition is met
+  } else {
+    # function if condition is  not met
+  }
+}
+
+```
+
+
+## Putting it `for` and `if/else` together
+
+```{r for loop with if else}
+
+for (i in years) {
+  if (i > 1977) {
+    d <- mean(gapminder$lifeExp[gapminder$year == i])
+    print(paste("year:", i, 
+                 "life expectancy:", d))
+  } else {
+    d <- mean(gapminder$gdpPercap[gapminder$year == i])
+    print(paste("year:", i,
+                 "GDP per capita:", d))
+  }
+}
+```
+
+# Writing functions
+
+
+## Writing functions
+
+- Hadley Wickham: If you have to copy-and-paste three times, it is time to write a function
+- John Chambers: Everything that happens in R is the result of a function call -- even `[`
+
+```{r everything is a function call}
+gapminder$lifeExp[gapminder$country == "Germany"]
+`[`(gapminder$lifeExp, gapminder$country == "Germany")
+```
+
+## The anatomy of a function
+
+- Write a function should look familiar -- initialize with `function`
+- Every function has arguments
+
+```{r a function}
+my_function <- # give the function a name
+  function(x, y) { # arguments for the function go inside the parentheses
+    # the expressions do in the braces
+  }
+```
+
+## Writing a function
+
+- Let's write a function that prints the mean and standard deviation for life expentancy for a given country in the `gapminder` dataset
+
+```{r writing a function}
+get_mean_sd <- 
+  function(df, variable, country) {
+    var <- gapminder[[variable]][gapminder$country == country]
+    m_lf <- mean(var)
+    sd_lf <- sd(var)
+    cat("Country:", country, 
+        "\nMean Life Expectancy:", m_lf,
+        "\nSD Life Expectancy:", sd_lf)
+  }
+
 ```
 
 
