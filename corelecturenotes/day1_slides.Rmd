@@ -1,0 +1,133 @@
+---
+title: 'Intro to R: Day 1'
+author: "Kumar Ramanathan"
+date: "`r Sys.Date()`"
+output: 
+  revealjs::revealjs_presentation:
+    theme: moon
+    incremental: true
+    self_contained: false
+    reveal_plugins: ["notes"]
+params:
+  notes: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+notes<-params$notes
+```
+
+# Introduction
+
+## Why R?
+
+## RStudio and RStudio Server
+
+## Some key concepts
+
+## Recall your DataCamp course
+
+By now, you should all have completed the *Introduction to R* course on DataCamp. Congratulations! You already know quite a lot about how R works. 
+
+To refresh, you covered the following material in your course:
+
+- Arithmetic with R
+- Objects and variable assignment
+- Data types, including: character, numeric, logical, factors
+- Data structures, including: vectors, matricies, data frames, lists
+
+<aside class="notes">
+Today, we will briefly review the above topics, and then turn to new material on reading and writing files, data manipulation, and data visualization.
+</aside>
+
+# Review: Basics and data types 
+
+## Arithmetic
+
+Open up the file `day1_exercises.R` in RStudio. Do the following tasks:
+
+- Pick a number; save it as `x`
+- Multiply x by 3
+- Take the log of the above <small>(Hint, you need the function `log()` here)</small>
+- Subtract 4 from the above
+- Square the above
+
+## Arithmetic
+
+```{r arithmetic}
+x <- 5
+x*3
+log(x*3)
+log(x*3)-4
+(log(x*3)-4)^2
+```
+
+## Comparisons and Logical Operators
+
+- Check if 1 is bigger than 2
+- Check if 1 + 1 is equal to 2
+- Check if it is true that the strings "eat" and "drink" are not equal to each other
+- Check if it is true that 1 is equal to 1 *AND* 1 is equal to 2 
+  <small>(Hint: remember what the operators `&` and `|` do)</small>
+- Check if it is true that 1 is equal to 1 *OR* 1 is equal to 2
+
+## Comparisons and Logical Operators
+
+```{r comparisons}
+1 > 2
+(1 + 1) == 2
+"eat" != 'drink'
+(1==1) & (1==2)
+(1==1) | (1==2)
+```
+
+## Packages
+
+- Install the package `tidyverse`
+- Load the package `tidyverse`
+- Open the help file for the function `recode` 
+  <small>(Hint: remember what `?` does)</small>
+
+## Packages
+
+```{r packages, eval=F}
+install.packages("tidyverse")
+
+library(tidyverse)
+
+?recode
+```
+
+## Data types
+
+- **logical**: `TRUE` or `FALSE` 
+  <small>(When co-coerced into numeric type, `TRUE`=`1` and `FALSE`=`0`)</small>
+- **integer**: a specific type; most numbers are numeric instead
+- **numeric**: real or decimal 
+- **complex**: ex: `2+5i`
+- **character**: `"text data"`, denoted with quotes
+  <small>(`'single quotes'` and `"double quotes"` both work)</small>
+- Use `typeof()` on an object to check its type
+
+# Review: Data structures
+
+## Vectors
+
+## Factors
+
+## Lists
+
+## Matricies
+
+## Data frames
+
+# Reading files
+
+# Data manipulation
+
+# Writing files
+
+# Data visualization
