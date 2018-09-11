@@ -442,7 +442,7 @@ Even if you don't plan to use categorical data, you should know that factors exi
 
 ## Lists
 
-Lists are a bit like complex vectors.  An element of a list can hold any other object, including another list.  You can keep multi-dimensional and ragged data in R using lists.  
+Lists are a bit like complex vectors. An element of a list can hold any other object, including another list.  You can keep multi-dimensional and ragged data in R using lists.  
 
 ```{r}
 l1 <- list(1, "a", TRUE, 1+4i)
@@ -484,7 +484,7 @@ y^-1 # matrix inversion
 y * -1
 ```
 
-Elements in a matrix are indexed like `mat[row number, col number]`.  Omitting a value for row or column will give you the entire column or row, respectively.
+Elements in a matrix are indexed like `mat[row number, col number]`. Omitting a value for row or column will give you the entire column or row, respectively.
 
 ```{r}
 y[1,1]
@@ -684,7 +684,7 @@ You can also see a list of variables using `names()`.
 names(gapminder5)
 ```
 
-Other useful functions are `dim()` which shows the dimensions of the data frame, and `head()` which shows the first few rows of the data frame (5 rows by default).
+Other useful functions are `dim()` which shows the dimensions of the data frame, `str()` which shows the dimensions of the data frame along with the names of variables and the first few values in each variable, `nrow()` and `ncol()` which show the number of rows and colums, and `head()` which shows the first few rows of the data frame (5 rows by default).
 
 A useful way to examine a discrete or categorical variable is to use a frequency table. These are easy to make in R, using the `table()` function:
 
@@ -769,7 +769,42 @@ Sorting a table is often useful. For example:
 sort(table(gapminder07$continent))
 ```
 
-## Adding and removing columns - UNFINISHED
+## Adding and removing columns
+
+You can add variables to a data frame in several ways. Here, we will show two standard methods using base R. On Day 3, you will learn about alternatives using the `data.table` and `dplyr` approaches.
+
+To demonstrate, let's first create a vector with the same number of values as the number of rows in the data frame. If you want to learn what is going on in this code, look at the help file for the function `sample()`.
+
+```{r}
+newvar <- sample(1:5000, 1704, replace = FALSE)
+```
+
+You can add a variable/column by using the `cbind()` function:
+
+```{r}
+gapminder5 <- cbind(gapminder5, newvar)
+```
+
+You can add a variable/column by assigning it to data frame directly:
+
+```{r}
+gapminder5$newvar <- newvar
+```
+
+To remove a variable/column from a data frame, you can assign a `NULL` value to the variable:
+
+```{r}
+gapminder$newvar <- NULL
+```
+
+You can also remove a variable/column by negatively indexing the data frame:
+```{r}
+gapminder5 <- gapminder5[-"newvar"]
+gapminder5 <- gapminder5[,-c("newvar")] 
+# The second method is equivalent to the first, but can be used to remove multiple columns at the same time.
+```
+
+To add rows, you can use the function `rbind()`. Remember that rows may include different data types, in which case you would need to use the function `list()`.
 
 ## Recoding variables
 
