@@ -230,21 +230,34 @@ table(gapminder07$lifeExp_over70)
 
 #### Writing a data file ####
 
+# Save the gapminder07 data frame as a CSV file using write.csv()
+
+
 #### Save R objects ####
+
+# See lecture notes for guidance and more examples.
+
 
 #### DATA VISUALIZATION ####
 
 #### Histograms ####
 
+# Create a histogram of the variable 'lifeExp' in gapminder07
+
+
+# Re-create the histogram with a title and axis labels
+
+
+# Bonus: Change the `breaks = ` argument from its default setting and see what happens.
+
+
 #### Scatterplots ####
 
+# Create a scatterplot with `lifeExp` on the y-axis and `gdpPercap` on the x-axis.
 
 
+# Add a title and axis labels.
 
 
-
-
-
-
-
+# Bonus: Add a horizontal line indicating the mean of `lifeExp` onto the plot using `abline()`.
 
