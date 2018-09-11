@@ -686,6 +686,18 @@ names(gapminder5)
 
 Other useful functions are `dim()` which shows the dimensions of the data frame, `str()` which shows the dimensions of the data frame along with the names of variables and the first few values in each variable, `nrow()` and `ncol()` which show the number of rows and colums, and `head()` which shows the first few rows of the data frame (5 rows by default).
 
+When applied to a data frame, the `summary()` function provides useful summary statistics for each variable (i.e. column) in the data frame. Let's try it with the Gapminder data:
+
+```{r}
+summary(gapminder5)
+```
+
+We can also use functions like `mean()`, `median()`, `var()`, `sd()`, and `quantile()` to calculate other summary statistics for individual variables. For example, let's calculate the mean of life expectancy. Recall that we can use the `$` operator to call up a variable within a data frame using its name.
+
+```{r}
+mean(gapminder5$lifeExp)
+```
+
 A useful way to examine a discrete or categorical variable is to use a frequency table. These are easy to make in R, using the `table()` function:
 
 ```{r}
@@ -704,20 +716,6 @@ You can generate a frequency table with more than one variable as well:
 table(gapminder5$continent, gapminder5$year)
 ```
 
-## Calculating summary statistics
-
-When applied to a data frame, the `summary()` function provides useful summary statistics for each variable (i.e. column) in the data frame. Let's try it with the Gapminder data:
-
-```{r}
-summary(gapminder5)
-```
-
-We can also use functions like `mean()`, `median()`, `mode()`, `var()`, and `sd()` to calculate other summary statistics for individual variables. For example, let's calculate the mean of life expectancy. Recall that we can use the `$` operator to call up a variable within a data frame using its name.
-
-```{r}
-mean(gapminder5$lifeExp)
-```
-
 ## Subsetting
 
 Notice that each row in the data frame represents one country in a given year. Perhaps we are interested in analyzing only data from one year. To do this, we will have to "subset" our data frame to include only those rows that we want to keep. 
@@ -726,8 +724,8 @@ The `subset()` function lets you select rows and columns you want to keep. You c
 
 ```{r, eval=FALSE}
 subset(data.frame, 
-       subset=condition for rows to keep,
-       select=columns to keep)
+       subset=condition indicating rows to keep,
+       select=condition indicating columns to keep)
 ```
 
 For eaxmple, let's create a new data frame containing only 2007 data by subsetting the original data frame.
@@ -825,7 +823,7 @@ gapminder07$lifeExp_highlow[gapminder07$lifeExp>mean(gapminder07$lifeExp)] <- "H
 gapminder07$lifeExp_highlow[gapminder07$lifeExp<mean(gapminder07$lifeExp)] <- "Low"
 ```
 
-There's also a `recode()` function in the `dplyr` library.You specify the reassignment of values. For example, let's create a new variable with abbreviated continent names.
+There's also a `recode()` function in the `dplyr` library. You specify the reassignment of values. For example, let's create a new variable with abbreviated continent names.
 
 ```{r}
 library(dplyr)
@@ -845,18 +843,20 @@ We will return to `recode()` and other `dplyr` functions on Day 3. The `ifelse()
 To compute summary statistics by groups in the data, one option is to use the `aggregate()` function. For example, we can calculate the mean of life expectancy for each continent:
 
 ```{r}
-aggregate(gapminder07$lifeExp, by=list(continent=gapminder07$continent), FUN=mean)
+aggregate(gapminder07$lifeExp ~ gapminder07$continent, FUN=mean)
 ```
+
+The `~` operator can be read as "by" or "as a function of", and is used in many contexts. A construction such as `y ~ x1 + x2` is referred to as a *formula*.
 
 We can also aggregate by two variables. For example, let's use the original Gapminder data (not just the 2007 data) and aggregate by continent *and* year.
 
 ```{r}
-aggregate(gapminder5$lifeExp, by=list(year=gapminder5$year, continent=gapminder5$continent), FUN=mean)
+aggregate(gapminder5$lifeExp ~ gapminder5$year + gapminder5$continent, FUN=mean)
 ```
 
 ## Statistics
 
-Now that we have data ... we can do statistics! You will learn more about particular statistical models and methods over the course of your program. For now, let's do some basic things to get a feel for how R handles statistical analysis.
+Now that we have a dataset ... we can do statistics! You will learn more about particular statistical models and methods over the course of your program. For now, let's do some basic things to get a feel for how R handles statistical analysis.
 
 ### Correlations
 
@@ -880,7 +880,7 @@ Do countries with high or low life expectancy have different GDP per capita? Apa
 t.test(gapminder07$gdpPercap~gapminder07$lifeExp_highlow)
 ```
 
-Think of `~` as "as a function of". So the above code reads "GDP per capita as a function of life expectancy", meaning grouped by or explained by.
+Remember: you can read `~` as "as a function of". So the above code reads "GDP per capita as a function of life expectancy", meaning grouped by or explained by.
 
 We don't have to use the formula syntax. We can specify data for two different groups. Let's see if GDP per capita is different when comparing the Americas and Asia.
 
@@ -924,10 +924,10 @@ summary(r1)
 
 Note that a constant (Intercept) term was added automatically.
 
-Let's try another regression with two indpendent variables. This time, we will use the full `gapminder5` data and predict life expectancy as a function of GDP per capita and year.
+Let's try another regression with two indpendent variables. This time, we will predict life expectancy as a function of GDP per capita and population.
 
 ```{r}
-r2 <- lm(lifeExp ~ gdpPercap + year, data=gapminder5)
+r2 <- lm(lifeExp ~ gdpPercap + pop, data=gapminder07)
 summary(r2)
 ```
 
