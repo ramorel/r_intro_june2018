@@ -1,0 +1,98 @@
+---
+title: "Intro to R: Day 1"
+author: "Kumar Ramanathan"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+params:
+  notes: no
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = normalizePath("../"))
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+notes<-params$notes
+```
+
+# Introduction to ggplot
+
+## What is ggplot?
+
+The `ggplot2` package is part of `tidyverse`, a suite of packages maintained by the RStudio company. In ggplot, graphics are built in ggplot by supplying a dataset and *aesthetic mapping*, and then adding *layers* that build geometries, scales, coordinate systems, and more using the provided data and mapping.
+
+Before using ggplot, make sure to load the package. You can either load `tidyverse` or `ggplot2` directly.
+
+```{r}
+library(tidyverse)
+```
+
+## Why ggplot?
+
+- It is highly customizable and extensible.
+- It is designed to work well in conjunction with `dplyr` and other `tidyverse` packages.
+- It has been in usage for over 10 years, meaning that help is widely available.
+- Its wide usage has also given rise to a wide variety of avilable [extensions](http://www.ggplot2-exts.org/gallery/), including those that handle create interactive graphics (`ggigraph`), animated graphics (`gganimate`), alluvial diagrams (`ggalluvial`), maps (`ggmap`), and more.
+
+## Some useful resources
+
+- The [ggplot cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf) maintained by RStudio is an invaluable resource. I always have it open when using `ggplot2`.
+- The [ggplot reference sheet](https://ggplot2.tidyverse.org/reference/index.html) maintained by RStudio. In your early days using `ggplot2`, this will be more useful in conjunction with the cheatsheet since it contains more detail on syntax and links to full help files. 
+- The [Data Visualization chapter](http://r4ds.had.co.nz/data-visualisation.html) in the R for Data Science book by Garrett Grolemund and Hadley Wickham. The rest of the book explores other parts of the `tidyverse`.
+- And, of course, the help files that come with the package itself.
+
+# Basics and syntax
+
+ggplot works by combining several functions using the `+` operator. You can start a new line after each `+` operator for readability if you would like (I do so throughout these notes.) Each function does something specific: provide a dataset, create a geometric object, add labels, add scales, change the coordinate system or layout, change the color palette, etc. The most basic graphic always needs two functions: a `ggplot()` function where data is provided, and at least one `geom` function to generate a geometric object (otherwise we will get a boring, empty plot). In `ggplot()`, the `data = ` argument is required. In any `geom` function (e.g. `geom_point()` or `geom_hist()`), the `mapping = ` argument is required, to which we provide information within a nested `aes()` function. The basic structure appears as follows:
+
+```{r ggplot structure, eval=F}
+ggplot(data = <data frame>) + 
+  geom_<type>(mapping = aes(<aesthetics info>))
+```
+
+To demonstrate with an example, let's re-create the scatterplot we made in Day 1 using data from Gapminder. Recall that we used the 2007 data subset and plotted the relationship between life expectancy on the y-axis and GDP per capita on the x-axis. Using the structure above, we would provide the data in the first function, `ggplot()`, in the `data = ` argument. We would then select `geom_point()` as our section function, since the geometric object we want to generate is points. Within the `mapping = ` argument of `geom_point()`, we provide our aesthetic mapping. In this case, we need to provide an `x` and `y` variable for the points. Altogether, it looks like this:
+
+```{r scatterplot 1}
+ggplot(data = gapminder07) + 
+  geom_point(mapping = aes(x = gdpPercap, y = lifeExp))
+```
+
+Recall how we added a horizontal line to the scatterplot on Day 1. We can replicate that in ggplot by adding another layer using the `geom_hline()` function, which generates another geometric object (specifically, a horizontal line). Notice that since it is the first argument defined in the function, we don't have to state `data = ` or `mapping = ` explicitly. 
+
+```{r scatterplot 2}
+ggplot(gapminder07) + 
+  geom_point(aes(x = gdpPercap, y = lifeExp)) + 
+  geom_hline(aes(yintercept = mean(lifeExp)))
+```
+
+We can also add titles and axes as a layer using the `labs()` function.
+
+```{r scatterplot 3}
+ggplot(data = gapminder07) + 
+  geom_point(aes(x = gdpPercap, y = lifeExp)) + 
+  geom_hline(aes(yintercept = mean(lifeExp))) + 
+  labs(title = "Relationship between life expectancy and GDP per capita in 2007", 
+       x = "GDP per capita", y = "Life expectancy")
+```
+
+# Preparing your data
+
+# Aesthetics
+
+# Geometries
+
+# Themes, Legends, etc.
+
+# Other key features
+
+## Facets
+
+## Saving images
+
+# Data visualization beyond ggplot2
