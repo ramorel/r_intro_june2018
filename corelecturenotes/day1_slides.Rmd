@@ -13,6 +13,7 @@ params:
 ---
 
 ```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = normalizePath("../"))
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -20,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 notes<-params$notes
 ```
 
-# Introduction
+# Introduction - NEED TO FINISH
 
 ## Why R?
 
@@ -234,7 +235,7 @@ gapminder5 <- read.csv(file = "data/gapminder5.csv",
 - Install the `readr` package
 - Use `read_csv()` to load the gapminder data
 
-## Reading files: read_csv()-- FIX THIS LATER
+## Reading files: read_csv()
 
 ```{r read_csv pt1, eval=F}
 install.packages("reader")
@@ -242,7 +243,7 @@ install.packages("reader")
 
 ```{r read_csv pt2}
 library(readr)
-gapminder5 <- read_csv("C:/Users/kumar/OneDrive - Northwestern University - Student Advantage/Assistantships & Jobs/MSiA/r_intro_june2018/data/gapminder5.csv")
+gapminder5 <- read_csv("data/gapminder5.csv")
 ```
 
 ## Reading files
