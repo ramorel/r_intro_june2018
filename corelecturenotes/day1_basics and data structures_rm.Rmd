@@ -633,7 +633,7 @@ Looking at the help for `read.csv`, there are a number of different options and 
 Let's redo the above with a better set of options:
 
 ```{r}
-gapminder5 <- read.csv("data/gapminder5", 
+gapminder5 <- read.csv("data/gapminder5.csv", 
                       stringsAsFactors=FALSE, 
                       strip.white=TRUE, 
                       na.strings=c("NA", ""))
