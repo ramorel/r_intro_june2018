@@ -13,6 +13,7 @@ params:
 ---
 
 ```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = normalizePath("../"))
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -24,9 +25,30 @@ notes<-params$notes
 
 ## Why R?
 
+- R is flexible
+- R is customizable
+- R is open source
+- R has a large community of users
+
 ## RStudio and RStudio Server
 
+- RStudio refers to both the company and the software
+- RStudio is an integrated development environment (IDE) for R
+- You will be using RStudio Server Pro
+
+<aside class="notes">
+RStudio helps you organize your workflow and keep track of your work. 
+The top-left pane is where you open, work on, and save script files. 
+The bottom-left pane includes the console, which is where your code actually "runs" -- you can run code here directly, or from a script file. 
+The right-hand side panes include tools for manging your environment, workspace, and packages; for plotting and graphics; for accessing help files; and more.
+</aside>
+
 ## Some key concepts
+
+- Objects
+- Packages
+- Functions
+- Help files
 
 ## Recall your DataCamp course
 
@@ -51,7 +73,8 @@ Open up the file `day1_exercises.R` in RStudio. Do the following tasks:
 
 - Pick a number; save it as `x`
 - Multiply x by 3
-- Take the log of the above <small>(Hint, you need the function `log()` here)</small>
+- Take the log of the above 
+  <small>(Hint, you need the function `log()` here)</small>
 - Subtract 4 from the above
 - Square the above
 
@@ -86,19 +109,22 @@ log(x*3)-4
 
 ## Packages
 
-- Install the package `tidyverse`
-- Load the package `tidyverse`
+- Load the package `tidyverse` (it has already been installed for you on the system-level)
 - Open the help file for the function `recode` 
   <small>(Hint: remember what `?` does)</small>
 
 ## Packages
 
 ```{r packages, eval=F}
-install.packages("tidyverse")
-
 library(tidyverse)
 
 ?recode
+```
+
+Remember, if you need to install a package:
+
+```{r packages install, eval=F}
+install.packages("tidyverse")
 ```
 
 ## Data types
@@ -231,18 +257,14 @@ gapminder5 <- read.csv(file = "data/gapminder5.csv",
 
 ## Reading files: read_csv()
 
-- Install the `readr` package
+- Load the `readr` package (it has already been installed for you as part of `tidyverse`)
 - Use `read_csv()` to load the gapminder data
 
-## Reading files: read_csv()-- FIX THIS LATER
-
-```{r read_csv pt1, eval=F}
-install.packages("reader")
-```
+## Reading files: read_csv()
 
 ```{r read_csv pt2}
 library(readr)
-gapminder5 <- read_csv("C:/Users/kumar/OneDrive - Northwestern University - Student Advantage/Assistantships & Jobs/MSiA/r_intro_june2018/data/gapminder5.csv")
+gapminder5 <- read_csv("data/gapminder5.csv")
 ```
 
 ## Reading files
@@ -262,18 +284,18 @@ gapminder5 <- read_csv("C:/Users/kumar/OneDrive - Northwestern University - Stud
     - `table()` creates a frequency table of one or more variables
     - `prop.table()` can turn a frequency table into a proportion table
 
-<aspect class="notes">
+<aside class="notes">
 Notice that any data frames which have been read in or created, like all other objects, can be seen in the environment
-</aspect>
+</aside>
 
 ## Exploring data frames
 
 - Run `summary()` on the gapminder data
 - Find the mean of the variable `pop`
 - Create a frequency table of the variable `year`
-  <small>(Hint: use `table()`)</small>
+<small>(Hint: use `table()`)</small>
 - Create a proportion table of the variable `continent`
-  <small>(Hint: use `prop.table()`)</small>
+<small>(Hint: use `prop.table()`)</small>
 
 ## Exploring data frames
 
@@ -295,19 +317,22 @@ prop.table(table(gapminder5$continent))
     - You can write conditional statement in index brackets: `gapminder5[gapminder5$continent=="Asia",]`
     - You can use the `subset()` function: `subset(gapminder5, subset=continent=="Asia")`
 
-<aspect class="notes">
+<aside class="notes">
 The most obvious use case of subsetting is to create a separate, smaller data frame, which we will do shortly. But think also about how useful it is to quickly subset a data frame by condition: we can use subsets as inputs for statistical models, for example.
-</aspect>
+</aside>
 
 ## Sorting
 
-- 
+- The `sort()` function reorders elements, in ascending order by default. 
+    - You can flip the order by using the `decreasing = TRUE` argument.
+- The `order()` function gives you the index positions in sorted order.
+- `sort()` is useful for quickly viewing vectors; `order()` is useful for arranging data frames.
 
 ## Subsetting and Sorting
 
 - Create a new data frame called `gapminder07` containing only those rows in the gapminder data where `year` is 2007
 - Created a sorted frequency table of the variable `continent` in `gapminder07`
-  <small>(Hint: use `table()` and `sort()`)</small>
+<small>(Hint: use `table()` and `sort()`)</small>
 - Print out the population of Mexico in 2007
 - Try the bonus question if you have time
 
@@ -320,9 +345,9 @@ gapminder07$pop[gapminder07$country=="Mexico"]
 head(gapminder07[order(gapminder07$pop),])
 ```
 
-<aspect class="notes">
+<aside class="notes">
 Don't worry too much about the bonus question if you find it confusing. The package `dplyr`, which we will cover on Thursday, will offer other ways to do this kind of task which some of you may find more intuitive.
-</aspect>
+</aside>
 
 ## Adding and removing columns
 
@@ -494,4 +519,4 @@ plot(gapminder07$lifeExp ~ gapminder07$gdpPercap,
 abline(h = mean(gapminder07$lifeExp))
 ```
 
-# Previewing Day 2 material
+# The End!

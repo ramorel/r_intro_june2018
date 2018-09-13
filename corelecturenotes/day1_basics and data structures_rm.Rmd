@@ -13,7 +13,8 @@ params:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("../"))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r, include=FALSE}
@@ -36,7 +37,6 @@ Here are a few things to remember about R:
 - There are multiple ways to do most things. Some ways are better than others, but sometimes it is a question of style and preference.
 - You can, and often will, have more than one dataset open in R at the same time.
 
-
 ## RStudio and RStudio Server
 
 RStudio is a software program that makes working in R easier, developed and maintained by a company with the same name. It provides an integrated development environment, or IDE, for R. RStudio helps you organize your workflow and keep track of your work. The top-left pane is where you open, work on, and save script files. The bottom-left pane includes the console, which is where your code actually "runs" -- you can run code here directly, or from a script file. The right-hand side panes include tools for manging your environment, workspace, and packages; for plotting and graphics; for accessing help files; and more.
@@ -50,6 +50,8 @@ Much of R's power comes from contributed packages. You can install and manage pa
 ```{r, eval=FALSE}
 install.packages("tidyverse")
 ```
+
+The RStudio Server Pro install that you are using already has `tidyverse` and some other common packages installed at the system-level, so you will not actually need to do this step. But *do* take note of this material, as you will likely need to install packages in the future. You can easily check what packages have been installed already in the "Packages" tab on the bottom-right pane.
 
 Note that `tidyverse` is a composite package that will install multiple component packages and their dependencies. It includes `dplyr` and `ggplot2`, which we will use extensively on Day 3 of the boot camp. You'll get a lot of messages as the installation happens.
 
@@ -632,7 +634,7 @@ Looking at the help for `read.csv`, there are a number of different options and 
 Let's redo the above with a better set of options:
 
 ```{r}
-gapminder5 <- read.csv("data/gapminder5", 
+gapminder5 <- read.csv("data/gapminder5.csv", 
                       stringsAsFactors=FALSE, 
                       strip.white=TRUE, 
                       na.strings=c("NA", ""))
@@ -649,6 +651,7 @@ Look at the `readr` package (part of the tidyverse), which attempts to smooth ov
 To read in the same data with the same settings as above, using `readr` (note similar function name, with `_` instead of `.`):
 
 ```{r, message=TRUE}
+library(readr)
 gapminder5 <- read_csv("data/gapminder5.csv")
 ```
 
@@ -792,11 +795,12 @@ gapminder5$newvar <- newvar
 To remove a variable/column from a data frame, you can assign a `NULL` value to the variable:
 
 ```{r}
-gapminder$newvar <- NULL
+gapminder5$newvar <- NULL
 ```
 
 You can also remove a variable/column by negatively indexing the data frame:
-```{r}
+
+```{r, eval = F}
 gapminder5 <- gapminder5[-"newvar"]
 gapminder5 <- gapminder5[,-c("newvar")] 
 # The second method is equivalent to the first, but can be used to remove multiple columns at the same time.
