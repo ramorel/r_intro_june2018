@@ -14,7 +14,7 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_knit$set(root.dir = normalizePath("../"))
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r, include=FALSE}
