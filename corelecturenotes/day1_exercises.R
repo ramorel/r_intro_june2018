@@ -40,9 +40,6 @@
 
 #### Packages and Functions ####
 
-# Install the package tidyverse
-
-
 # Load the package tidyverse
 
 
@@ -132,10 +129,9 @@ data(mtcars)
 
 
 # Read gapminder data with read.csv()
-gapminder5 <# read.csv("data/gapminder5.csv", stringsAsFactors=FALSE)
+gapminder5 <- read.csv("data/gapminder5.csv", stringsAsFactors=FALSE)
 
-# Install and load readr package
-
+# Load the readr package
 
 
 # Read gapminder data with read_csv()
