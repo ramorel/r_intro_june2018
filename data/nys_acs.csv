@@ -1,4 +1,4 @@
-name,year,county_per_poverty,median_household_income,county_per_bach
+county_name,year,county_per_poverty,median_household_income,county_per_bach
 ALBANY,2009,0.11835114851797104,55350,0.190368191457453
 ALBANY,2010,0.11940519419008526,56090,0.19718856324240436
 ALBANY,2011,0.1207243129784805,57715,0.1989825768769275
