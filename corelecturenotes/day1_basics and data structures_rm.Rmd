@@ -14,7 +14,7 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_knit$set(root.dir = normalizePath("../"))
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r, include=FALSE}
@@ -36,7 +36,6 @@ Here are a few things to remember about R:
 - Packages are open source and user contributed, so use established packages or evaluate quality.
 - There are multiple ways to do most things. Some ways are better than others, but sometimes it is a question of style and preference.
 - You can, and often will, have more than one dataset open in R at the same time.
-
 
 ## RStudio and RStudio Server
 
@@ -793,11 +792,12 @@ gapminder5$newvar <- newvar
 To remove a variable/column from a data frame, you can assign a `NULL` value to the variable:
 
 ```{r}
-gapminder$newvar <- NULL
+gapminder5$newvar <- NULL
 ```
 
 You can also remove a variable/column by negatively indexing the data frame:
-```{r}
+
+```{r, eval = F}
 gapminder5 <- gapminder5[-"newvar"]
 gapminder5 <- gapminder5[,-c("newvar")] 
 # The second method is equivalent to the first, but can be used to remove multiple columns at the same time.
