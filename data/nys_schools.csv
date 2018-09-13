@@ -1,4 +1,4 @@
-entity_cd,entity_name,county_name,district_name,year,total_enroll,per_free_lunch,per_reduced_lunch,per_lep,mean_ela_score,mean_math_score
+school_cd,school_name,county_name,district_name,year,total_enroll,per_free_lunch,per_reduced_lunch,per_lep,mean_ela_score,mean_math_score
 010100010014,MONTESSORI MAGNET SCHOOL,ALBANY,ALBANY CITY SCHOOL DISTRICT,2008,316,0.33,0.1,0.01,NaN,NaN
 010100010014,MONTESSORI MAGNET SCHOOL,ALBANY,ALBANY CITY SCHOOL DISTRICT,2009,312,0.32,0.08,0.02,NaN,NaN
 010100010014,MONTESSORI MAGNET SCHOOL,ALBANY,ALBANY CITY SCHOOL DISTRICT,2010,300,0.26,0.08,0.03,NaN,NaN
