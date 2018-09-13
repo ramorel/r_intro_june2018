@@ -100,7 +100,19 @@ ggplot(data = gapminder07) +
 
 As you can see, the grammar of graphics used in ggplot2 breaks down the information that goes into each graphic into several layers, each of which you can customize.
 
-# Preparing your data
+# Preparing your data with dplyr
+
+```{r filtering data pre-ggplot}
+
+```
+
+```{r summarising data pre-ggplot}
+
+```
+
+```{r working in long format}
+
+```
 
 # Aesthetics
 
@@ -114,17 +126,21 @@ As you can see, the grammar of graphics used in ggplot2 breaks down the informat
 
 ## Multiple geometries in one plot
 
-# Other layers
+# Additional layers
 
 ## Stats
 
-## Scales and labels
+## Scales
+
+## Labels
 
 ## Themes
 
 ## Legends
 
-# Groups
+## Coordinate system adjustment
+
+# Grouped data
 
 ## Using colors
 
@@ -134,7 +150,7 @@ As you can see, the grammar of graphics used in ggplot2 breaks down the informat
 
 # Final notes
 
-## Comments within a ggplot flow
+## Comment your code
 
 ## Saving images
 
