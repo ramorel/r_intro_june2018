@@ -109,19 +109,22 @@ log(x*3)-4
 
 ## Packages
 
-- Install the package `tidyverse`
-- Load the package `tidyverse`
+- Load the package `tidyverse` (it has already been installed for you on the system-level)
 - Open the help file for the function `recode` 
   <small>(Hint: remember what `?` does)</small>
 
 ## Packages
 
 ```{r packages, eval=F}
-install.packages("tidyverse")
-
 library(tidyverse)
 
 ?recode
+```
+
+Remember, if you need to install a package:
+
+```{r packages install, eval=F}
+install.packages("tidyverse")
 ```
 
 ## Data types
@@ -254,14 +257,10 @@ gapminder5 <- read.csv(file = "data/gapminder5.csv",
 
 ## Reading files: read_csv()
 
-- Install the `readr` package
+- Load the `readr` package (it has already been installed for you as part of `tidyverse`)
 - Use `read_csv()` to load the gapminder data
 
 ## Reading files: read_csv()
-
-```{r read_csv pt1, eval=F}
-install.packages("reader")
-```
 
 ```{r read_csv pt2}
 library(readr)

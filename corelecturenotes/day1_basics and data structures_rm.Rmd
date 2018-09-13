@@ -51,6 +51,8 @@ Much of R's power comes from contributed packages. You can install and manage pa
 install.packages("tidyverse")
 ```
 
+The RStudio Server Pro install that you are using already has `tidyverse` and some other common packages installed at the system-level, so you will not actually need to do this step. But *do* take note of this material, as you will likely need to install packages in the future. You can easily check what packages have been installed already in the "Packages" tab on the bottom-right pane.
+
 Note that `tidyverse` is a composite package that will install multiple component packages and their dependencies. It includes `dplyr` and `ggplot2`, which we will use extensively on Day 3 of the boot camp. You'll get a lot of messages as the installation happens.
 
 CRAN (Comprehensive R Archive Network) is the name of the package repository. There are [mirrors](https://cran.r-project.org/mirrors.html) around the world. You can also install packages that are not on CRAN using the `devtools` package.
@@ -649,6 +651,7 @@ Look at the `readr` package (part of the tidyverse), which attempts to smooth ov
 To read in the same data with the same settings as above, using `readr` (note similar function name, with `_` instead of `.`):
 
 ```{r, message=TRUE}
+library(readr)
 gapminder5 <- read_csv("data/gapminder5.csv")
 ```
 
